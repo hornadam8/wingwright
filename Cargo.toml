@@ -1,0 +1,28 @@
+[package]
+name = "wingwright"
+version = "0.1.0"
+edition = "2021"
+description = "Build-your-own-plane cargo flying game in Rust + Bevy"
+
+[dependencies]
+bevy = { version = "0.16.1", features = ["wayland"] }
+bevy_egui = "0.34.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[features]
+dev = ["bevy/dynamic_linking"]
+
+# Fast iteration: optimize dependencies even in dev builds.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+# Shipping build: fat LTO + one codegen unit (same as maidas' release-fast profile).
+# Slower to build, but a smaller and faster binary.
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1

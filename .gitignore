@@ -1,0 +1,6 @@
+target/
+*.app/
+dist/
+shots/
+docs/HANDOFF.md
+docs/reference/
